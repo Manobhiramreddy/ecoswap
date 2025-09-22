@@ -10,7 +10,7 @@ pipeline {
 
   stages {
     stage('Where am I (Controller)') {
-      agent { label 'Built-In Node' }
+      agent { label 'ecoswap' }
       steps {
         echo "NODE = ${env.NODE_NAME}"
         echo "WORKSPACE = ${env.WORKSPACE}"
@@ -18,7 +18,7 @@ pipeline {
     }
 
     stage('Build Frontend') {
-      agent { label 'Built-In Node' }  // change to your frontend-capable agent
+      agent { label 'ecoswap' }  // change to your frontend-capable agent
       steps {
         dir('whole-frontend') {
           echo "Installing frontend dependencies..."
@@ -34,7 +34,7 @@ pipeline {
     }
 
     stage('Build Backend') {
-      agent { label 'Built-In Node' }  // or 'node', whatever your backend agent
+      agent { label 'ecoswap' }  // or 'node', whatever your backend agent
       steps {
         dir('whole-backend') {
           echo "Installing backend dependencies..."
@@ -53,7 +53,7 @@ pipeline {
     stage('Parallel: Post-Build Checks') {
       parallel {
         stage('Frontend Test / Lint') {
-          agent { label 'Built-In Node' }
+          agent { label 'ecoswap' }
           steps {
             dir('whole-frontend') {
               echo "Running frontend lint/tests"
@@ -64,7 +64,7 @@ pipeline {
           }
         }
         stage('Backend Test / Lint') {
-          agent { label 'Built-In Node' }
+          agent { label 'ecoswap' }
           steps {
             dir('whole-backend') {
               echo "Running backend lint/tests"
@@ -81,7 +81,7 @@ pipeline {
   post {
     always {
       // choose a node/agent that has the artifacts
-      node('Built-In Node') {   // or appropriate label
+      node('ecoswap') {   // or appropriate label
         archiveArtifacts artifacts: '''
           whole-frontend/dist/,
           whole-frontend//frontend-artifact.txt,
