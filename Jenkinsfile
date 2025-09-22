@@ -22,13 +22,13 @@ pipeline {
       steps {
         dir('whole-frontend') {
           echo "Installing frontend dependencies..."
-          sh 'npm install'
+          bat 'npm install'  // Use 'bat' for Windows batch script
 
           echo "Building frontend with Vite..."
-          sh 'npm run build'
+          bat 'npm run build'  // Replace 'sh' with 'bat'
 
           echo "Frontend build OK"
-          sh 'echo FRONTEND_BUILD_OK > frontend-artifact.txt'
+          bat 'echo FRONTEND_BUILD_OK > frontend-artifact.txt'  // Use 'bat' for Windows command
         }
       }
     }
@@ -38,14 +38,14 @@ pipeline {
       steps {
         dir('whole-backend') {
           echo "Installing backend dependencies..."
-          sh 'npm install'
+          bat 'npm install'  // Use 'bat' for Windows batch script
 
           echo "Running backend build (if any)..."
           // If there's build step, e.g. tsc compile, or something
-          // For example: sh 'npm run build-backend'
+          // For example: bat 'npm run build-backend'
 
           echo "Backend build OK"
-          sh 'echo BACKEND_BUILD_OK > backend-artifact.txt'
+          bat 'echo BACKEND_BUILD_OK > backend-artifact.txt'  // Use 'bat' for Windows command
         }
       }
     }
@@ -58,8 +58,8 @@ pipeline {
             dir('whole-frontend') {
               echo "Running frontend lint/tests"
               // example:
-              sh 'npm run lint'      // if you have lint
-              sh 'npm test'          // if you have tests
+              bat 'npm run lint'      // Adjust to 'bat' for Windows
+              bat 'npm test'          // Adjust to 'bat' for Windows
             }
           }
         }
@@ -69,8 +69,8 @@ pipeline {
             dir('whole-backend') {
               echo "Running backend lint/tests"
               // example:
-              sh 'npm run lint'      // adjust if you have tests
-              sh 'npm test'
+              bat 'npm run lint'      // Adjust to 'bat' for Windows
+              bat 'npm test'          // Adjust to 'bat' for Windows
             }
           }
         }
