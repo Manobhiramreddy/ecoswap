@@ -14,7 +14,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   // ✅ Login function
-  const login = (username, password) => {
+  const login = (username, _password) => {
     // Here you can add real API check. For now, mock user:
     const newUser = { username };
 
