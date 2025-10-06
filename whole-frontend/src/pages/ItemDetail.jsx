@@ -1,16 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getItemById, requestSwap } from "../services/itemService";
+import { getItemById } from "../services/itemService";
 
 export default function ItemDetail() {
   const { id } = useParams();
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [swapOpen, setSwapOpen] = useState(false);
-  const [swapForm, setSwapForm] = useState({ requesterName: "", offeredItemId: "", message: "" });
-  const [swapMsg, setSwapMsg] = useState("");
-  const [swapErr, setSwapErr] = useState("");
-  const [coins, setCoins] = useState(100);
 
   const load = async () => {
     setLoading(true);
@@ -26,25 +21,6 @@ export default function ItemDetail() {
   useEffect(() => {
     load();
   }, [id]);
-
-  const onSwapChange = (e) =>
-    setSwapForm((f) => ({ ...f, [e.target.name]: e.target.value }));
-
-  const onSwapSubmit = async (e) => {
-    e.preventDefault();
-    setSwapErr("");
-    setSwapMsg("");
-    try {
-      await requestSwap(id, swapForm);
-      setSwapMsg("Swap request sent! 🎉 You earned 100 coins.");
-      setCoins((c) => c + 100);
-      setSwapOpen(false);
-      setSwapForm({ requesterName: "", offeredItemId: "", message: "" });
-      await load();
-    } catch (err) {
-      setSwapErr(err?.message || "Swap request failed");
-    }
-  };
 
   if (loading) return <p>Loading…</p>;
   if (!item) return <p>Item not found.</p>;

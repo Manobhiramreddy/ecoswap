@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";   
 import itemsRoutes from "./routes/items.js";
+import webhookRoutes from "./routes/webhookRoutes.js";
 import usersRoutes from "./routes/users.js";
 import authRoutes from "./routes/authRoutes.js";
 import webhookRoutes from "./routes/webhookRoutes.js";
