@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";   
 import itemsRoutes from "./routes/items.js";
+import webhookRoutes from "./routes/webhookRoutes.js";
 import usersRoutes from "./routes/users.js";
 import authRoutes from "./routes/authRoutes.js";
 import connectDB from "./config/db.js";
@@ -23,6 +24,7 @@ connectDB();
 app.use("/api/auth", authRoutes);
 app.use("/api/items", itemsRoutes);
 app.use("/api/users", usersRoutes);
+app.use("/", webhookRoutes);
 
 // Start the server
 app.listen(PORT, () => {
