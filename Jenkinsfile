@@ -75,7 +75,6 @@ pipeline {
           }
         }
       }
-pipeline {
 
   post {
     always {
