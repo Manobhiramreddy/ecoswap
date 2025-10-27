@@ -1,23 +1,27 @@
-# Stage 1: build
+# Stage 1: build the frontend
 FROM node:18-alpine AS build
 WORKDIR /app
-# copy package files first for caching
-COPY package*.json ./
-COPY package-lock.json ./
-RUN npm ci --silent
 
-# copy rest and build
-COPY . .
+# Copy only frontend files
+COPY whole-frontend/package*.json ./
+RUN npm install --silent
+
+# Copy the rest of the frontend source code
+COPY whole-frontend ./
+
+# Build the Vite app
 RUN npm run build
 
 # Stage 2: serve with nginx
 FROM nginx:stable-alpine
-# remove default nginx content
+
+# Remove default nginx files
 RUN rm -rf /usr/share/nginx/html/*
-# copy built files from the previous stage
+
+# Copy built files from previous stage
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# copy a basic nginx config (optional) to support SPA routing
+# Copy custom nginx config (optional)
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
